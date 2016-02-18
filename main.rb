@@ -58,7 +58,7 @@ class JuniorDeveloper < Developer
 
   def work!
     return raise "Нечего делать!" if @task_array.count == 0
-    puts "#{@name}: пытаюсь делать задачу '#{@task_array.shift}'. Осталось задач: #{@task_array.count}"
+    puts %Q{#{@name}: пытаюсь делать задачу '#{@task_array.shift}'. Осталось задач: #{@task_array.count}}
   end
 end
 
@@ -71,7 +71,7 @@ class SeniorDeveloper < Developer
   def work!
     return raise "Нечего делать!" if @task_array.count == 0
     if [true,false].sample 
-      2.times{ puts "#{@name}: выполнена задача '#{@task_array.delete(@task_array.sample)}'. Осталось задач: #{@task_array.count}"} if @task_array.count >=2
+      2.times{ puts %Q{#{@name}: выполнена задача "#{@task_array.delete(@task_array.sample)}". Осталось задач: #{@task_array.count}}} if @task_array.count >=2
       super if @task_array.count == 1 
     else
       puts "#{@name}: Что-то лень!"
@@ -79,13 +79,15 @@ class SeniorDeveloper < Developer
   end
 end
 
-#dev = SeniorDeveloper.new('Sen')
-#p dev
-#dev.status
-#dev.add_task("a")
-#dev.add_task("b")
-#dev.add_task("d")
-#dev.add_task("c")
-#dev.work!
-#puts dev.tasks
+
+# dev = SeniorDeveloper.new('Sen')
+# p dev
+# dev.status
+# dev.add_task("a")
+# dev.add_task("b")
+# dev.add_task("d")
+# dev.add_task("c")
+# dev.work!
+# puts dev.tasks=end
+
 
