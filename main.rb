@@ -79,13 +79,13 @@ class SeniorDeveloper < Developer
   end
 end
 
-dev = SeniorDeveloper.new('Sen')
-p dev
-dev.status
-dev.add_task("a")
-dev.add_task("b")
-dev.add_task("d")
-dev.add_task("c")
-dev.work!
-puts dev.tasks
+#dev = SeniorDeveloper.new('Sen')
+#p dev
+#dev.status
+#dev.add_task("a")
+#dev.add_task("b")
+#dev.add_task("d")
+#dev.add_task("c")
+#dev.work!
+#puts dev.tasks
 
