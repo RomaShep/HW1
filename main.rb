@@ -8,71 +8,66 @@ class Developer
   end
 
   def add_task (task_name)
-    return raise "Слишком много работы!" if @task_array.count == @MAX_TASKS
+    raise "Слишком много работы!" unless can_add_task?
     @task_array << task_name
     puts %Q{#{@name}: добавлена задача "#{task_name}". Всего в списке задач: #{@task_array.count}}
   end
 
   def tasks
-    return "#{@name}: задач нет!" if @task_array.count == 0
-    @s = ""
-    @task_array.each_index{ |i| @s += "#{i+1}.#{@task_array[i]}\n" } 
-    return @s
+    return "#{@name}: задач нет!" unless can_work?
+    @task_array.map.with_index{ |x,i| "#{i+1}.#{x}\n" }.join("")
   end
 
   def work!
-    return raise "Нечего делать!" if @task_array.count == 0
+    check_work
     puts %Q{#{@name}: выполнена задача "#{@task_array.shift}". Осталось задач: #{@task_array.count}}
   end
 
+  def check_work
+    raise "Нечего делать!" unless can_work?
+  end
+
   def status
-    case @task_array.count
-      when 0   
-        return "Свободен"
-      when @MAX_TASKS  
-        return "Занят"
-      else     
-        return "Работаю"
-    end
+    return "Свободен" unless can_work?
+    return "Занят" unless can_add_task?
+    "Работаю"
   end
 
   def can_add_task?
-    puts @task_array.count < @MAX_TASKS
+    @task_array.count < @MAX_TASKS
   end
 
   def can_work?
-    puts @task_array.count > 0
+    !@task_array.empty?
   end 
 end
 
 class JuniorDeveloper < Developer
-    def initialize(name)
-      super
-      @MAX_TASKS = 5
-  end
+  self.class::MAX_TASKS = 5
 
   def add_task (task_name)
-    return raise "Слишком сложно!" if task_name.length >= 20
+    raise "Слишком сложно!" if task_name.length >= 20
     super
   end
 
   def work!
-    return raise "Нечего делать!" if @task_array.count == 0
+    check_work
     puts %Q{#{@name}: пытаюсь делать задачу '#{@task_array.shift}'. Осталось задач: #{@task_array.count}}
   end
 end
 
 class SeniorDeveloper < Developer
-  def initialize(name)
-    super
-    @MAX_TASKS = 15
-  end
+  self.class::MAX_TASKS = 15
 
   def work!
-    return raise "Нечего делать!" if @task_array.count == 0
-    if [true,false].sample 
-      2.times{ puts %Q{#{@name}: выполнена задача "#{@task_array.delete(@task_array.sample)}". Осталось задач: #{@task_array.count}}} if @task_array.count >=2
-      super if @task_array.count == 1 
+    check_work
+    if [true,false].sample
+      if @task_array.count == 1
+        super
+      else
+        2.times{ puts %Q{#{@name}: выполнена задача "#{@task_array.delete(@task_array.sample)}". Осталось задач: #{@task_array.count}}}
+        #2.times{ super }
+      end 
     else
       puts "#{@name}: Что-то лень!"
     end
@@ -82,12 +77,14 @@ end
 
 # dev = SeniorDeveloper.new('Sen')
 # p dev
-# dev.status
+# puts dev.status
 # dev.add_task("a")
 # dev.add_task("b")
 # dev.add_task("d")
 # dev.add_task("c")
+# puts dev.can_add_task?
+# puts dev.can_work?
 # dev.work!
-# puts dev.tasks=end
+# puts dev.tasks
 
 
