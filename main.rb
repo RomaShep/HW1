@@ -1,14 +1,27 @@
 class Developer
-  attr_reader :name, :MAX_TASKS, :task_array, :TYPE, :STYPE
+  attr_reader :name, :task_array, :TYPE, :STYPE
   attr_accessor :priority 
+  
+  MAX_TASKS = 10
+  GROUP = :developers
+  TYPE = 'developer'
 
   def initialize(name)
     @name = name
-    @MAX_TASKS = 10
     @task_array = []
-    @TYPE = :developers
-    @STYPE = 'developer'
     @priority = 0
+  end
+
+  def MAX_TASKS
+    self.class::MAX_TASKS
+  end
+
+  def GROUP
+    self.class::GROUP
+  end
+
+  def TYPE
+    self.class::TYPE
   end
 
   def add_task (task_name)
@@ -38,7 +51,7 @@ class Developer
   end
 
   def can_add_task?
-    @task_array.count < @MAX_TASKS
+    @task_array.count < MAX_TASKS
   end
 
   def can_work?
@@ -47,15 +60,13 @@ class Developer
 end
 
 class JuniorDeveloper < Developer
-  def initialize(name)
-     super
-     @MAX_TASKS = 5
-     @TYPE = :juniors
-     @STYPE = 'junior'
-  end
+  MAX_TASKS = 5
+  GROUP = :juniors
+  TYPE = 'junior'
+  MAX_LENGTH = 20
 
   def add_task (task_name)
-    raise "Слишком сложно!" if task_name.length >= 20
+    raise "Слишком сложно!" if task_name.length >= MAX_LENGTH
     super
   end
 
@@ -66,12 +77,9 @@ class JuniorDeveloper < Developer
 end
 
 class SeniorDeveloper < Developer
-  def initialize(name)
-     super
-     @MAX_TASKS = 15
-     @TYPE = :seniors
-     @STYPE = 'senior'
-  end
+  MAX_TASKS = 15
+  GROUP = :seniors
+  TYPE = 'sinior'
 
   def work!
     check_work
@@ -110,20 +118,20 @@ class Team
     @team
   end
   def seniors
-    @team.select{ |dev| dev.TYPE == :seniors}
+    @team.select{ |dev| dev.GROUP == :seniors}
   end
   def developers
-    @team.select{ |dev| dev.TYPE == :developers}
+    @team.select{ |dev| dev.GROUP == :developers}
   end
   def juniors
-    @team.select{ |dev| dev.TYPE == :juniors}
+    @team.select{ |dev| dev.GROUP == :juniors}
   end
 
   def priority (*prior)
     @prior = *prior
     # @prior.map.with_index{ |x,i| puts "#{x} -- #{i}"}
     # @team.map { |dev| puts "#{dev.name} == #{dev.MAX_TASKS}"}
-    @team.map { |dev| @prior.map.with_index{ |priority,i| dev.priority = i if dev.TYPE == priority }}
+    @team.map { |dev| @prior.map.with_index{ |priority,i| dev.priority = i if dev.GROUP == priority }}
   end
 
   def on_task
@@ -134,7 +142,7 @@ class Team
   end 
 
   def report
-    @team.sort_by{|dev| [dev.task_array.count, dev.priority]}.map{ |dev| puts "#{dev.name} (#{dev.STYPE}): #{dev.task_array.map{|x| x}.join(", ")}"} 
+    @team.sort_by{|dev| [dev.task_array.count, dev.priority]}.map{ |dev| puts "#{dev.name} (#{dev.TYPE}): #{dev.task_array.map{|x| x}.join(", ")}"} 
   end
 end
 
