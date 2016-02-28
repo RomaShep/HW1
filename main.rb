@@ -85,9 +85,10 @@ end
 #p t.seniors
 #puts "*****Report*******"
 #t.report
-#t.add_task ['T1','t2'],  to: 'Ivan'
+t.add_task ['T1','t2'],  to: 'Ivan'
 14.times{ |i| t.add_task "T#{i}" }#, complexity: :senior, to: 'SDev1'}
 t.report
+puts t.all
 #t.report
 # p t.juniors
 
