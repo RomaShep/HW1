@@ -1,0 +1,16 @@
+<table>  
+  <tr>
+    <td>Петиция</td>
+    <td>Автор</td>
+  </tr>
+  <% @petitions.each do |petition| %>
+    <tr>
+      <td><%= link_to petition.name, petition_path(petition) %></td>
+      <td><%= petition.user.name %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+
+

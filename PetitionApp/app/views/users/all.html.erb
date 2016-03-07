@@ -1,0 +1,14 @@
+<h1>Все users</h1>
+ 
+<table>  
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.second_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.password_hash %></td>
+      <td><%= user.password_salt %></td>
+    </tr>
+  <% end %>
+</table>
+
