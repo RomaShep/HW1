@@ -3,21 +3,20 @@ Rails.application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "sign_up" => "users#new", :as => "sign_up"
 
-  get 'petitions/all'
-  get 'users/all'
-  get 'users/user_petitions'
-
+  get "votes/vote"
 
   resources :users
   resources :sessions
   resources :petitions
+  resources :votes
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
 
   # You can have the root of your site routed with "root"
-  root 'petitions#index'
+  #root 'petitions#index'
+  root 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

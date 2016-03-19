@@ -1,0 +1,34 @@
+<h1>Изминение петиции</h1>
+ 
+<%= form_for @petition,  method: :patch do |f| %>
+ 
+  <% if @petition.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@petition.errors.count, "error") %> prohibited
+        this petition from being saved:
+      </h2>
+      <ul>
+        <% @petition.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <div class="form-group">
+    <%= f.label :name, 'Название петиции' %><br />
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, 'Описание' %><br />
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Изменить', class: 'btn btn-success' %>
+
+    <%= link_to 'Назад', petitions_path, class: 'btn btn-default' %>
+  </div>  
+
+ 
+<% end %>

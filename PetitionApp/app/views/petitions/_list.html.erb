@@ -1,12 +1,31 @@
-<table>  
-  <tr>
-    <td>Петиция</td>
-    <td>Автор</td>
-  </tr>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Петиция</th>
+      <% unless params[:my] %>
+        <th>Автор</th>
+      <%end%>
+      <th>Голоса</th>
+      <th>Дата создание</th>
+      <% if current_user and params[:my]%>
+        <th colspan="2">Действия</th>
+      <%end%>
+    </tr>
+  </thead>
   <% @petitions.each do |petition| %>
     <tr>
       <td><%= link_to petition.name, petition_path(petition) %></td>
-      <td><%= petition.user.name %></td>
+      <% unless params[:my] %>
+        <td><%= petition.user.name %></td>
+      <%end%>
+      <td><%= petition.votes.size %></td>
+      <td><%= petition.created_at.strftime("%d/%m/%Y %H:%m") %></td>
+      <% if current_user and params[:my] %>
+        <td><%= link_to 'Изменить', edit_petition_path(petition) %></td>
+        <td><%= link_to 'Удалить', petition_path(petition),
+                method: :delete,
+                data: { confirm: 'Вы уверены что хотите это сделать?' } %></td>
+        <%end%>
     </tr>
   <% end %>
 </table>

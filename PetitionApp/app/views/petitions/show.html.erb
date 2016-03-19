@@ -1,9 +1,27 @@
-<p>
-  <strong>Петиция:</strong><br>
-  <%= @petition.name %><br>
-</p>
- 
-<p>
-  <strong>Описание:</strong><br>
-  <%= @petition.description %><br>
-</p>
+<h1>Петиция</h1>
+
+<%= form_for @petition, url: petitions_path do |f| %>
+  <div class="form-group">
+    <h1><%= f.label @petition.name %></h1>
+  </div>
+  <div class="form-group">
+    <h5><%= f.label @petition.created_at.strftime("%d/%m/%Y %H:%m") %></h5>
+  </div>
+  <div class="form-group">
+    <%= f.label @petition.description %>
+  </div>
+  <div class="form-group">
+    <%= f.label "Голосов: #{@petition.votes.size}" %>
+  </div>
+  <div class="actions">
+
+    <% if @petition.votes.where(user_id: current_user.id).any? %>
+      <p> Вы уже поддержали данную петицию </p>
+    <% else %>
+      <%= link_to 'Проголосовать', votes_path(user_id: current_user.id, petition_id: @petition), method: "post",class: 'btn btn-primary'  %>
+    <% end %>
+    <%= link_to 'Назад', petitions_path, class: 'btn btn-default' %>
+  </div> 
+
+
+<% end %>

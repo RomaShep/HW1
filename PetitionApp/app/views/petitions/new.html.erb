@@ -1,18 +1,21 @@
-<h1>New Petition</h1>
+<h1>Новая петиция</h1>
 
 
 <%= form_for @petition, url: petitions_path do |f| %>
-  <p>
-    <%= f.label 'Petition name' %><br>
-    <%= f.text_field :name %>
-  </p>
- 
-  <p>
-    <%= f.label 'Description' %><br>
-    <%= f.text_area :description %>
-  </p>
- 
-  <p>
-    <%= f.submit %>
-  </p>
+  <div class="form-group">
+    <%= f.label :name, 'Название петиции' %><br />
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, 'Описание' %><br />
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Создать', class: 'btn btn-success' %>
+    <%= link_to 'Назад', petitions_path, class: 'btn btn-default' %>
+  </div>  
+
+
 <% end %>
+
+
