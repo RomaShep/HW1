@@ -3,4 +3,5 @@ class Vote < ActiveRecord::Base
 
   validates_presence_of :user_id, :petition_id
   validates_uniqueness_of :petition_id, scope: :user_id
+
 end

@@ -14,14 +14,26 @@
     <%= f.label "Голосов: #{@petition.votes.size}" %>
   </div>
   <div class="actions">
-
-    <% if @petition.votes.where(user_id: current_user.id).any? %>
-      <p> Вы уже поддержали данную петицию </p>
+    <% if @petition.petition_vin? %>
+      <p> Петиция набрала достаточное количество голосов!!! </p>
+    <% end %>
+    <% if @petition.old? %>
+      <p> Петиция старая!!! </p>
+    <% end  %>
+    <% if @petition.expired? %>
+      <p> Петиция не активна </p>
     <% else %>
-      <%= link_to 'Проголосовать', votes_path(user_id: current_user.id, petition_id: @petition), method: "post",class: 'btn btn-primary'  %>
+      <% if @petition.votes.where(user_id: current_user.id).any? %>
+        <p> Вы уже поддержали данную петицию </p>
+      <% else %>
+        <%= link_to 'Проголосовать', votes_path(user_id: current_user.id, petition_id: @petition), method: "post",class: 'btn btn-primary'  %>
+      <% end %>
     <% end %>
     <%= link_to 'Назад', petitions_path, class: 'btn btn-default' %>
   </div> 
+
+
+
 
 
 <% end %>

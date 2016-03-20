@@ -11,3 +11,5 @@
 /log/*
 !/log/.keep
 /tmp
+*redis-stable*
+.byebug_history
