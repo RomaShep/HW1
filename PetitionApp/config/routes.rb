@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   #root 'petitions#index'
   root 'home#index'
 
+  require 'resque/server'
+  PetitionApp::Application.routes.draw do
+    mount Resque::Server.new, at: "/resque"
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

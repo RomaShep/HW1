@@ -32,6 +32,9 @@ class PetitionsController < ApplicationController
 
   def edit
     @petition = Petition.find(params[:id])
+    if @petition.expired?
+      redirect_to @petition , :notice => "Петиция не может быть обновлена!"
+    end
   end
 
   def create
